@@ -1,0 +1,1263 @@
+<!DOCTYPE html>
+<html lang="ro">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>DOSAR CLASIFICAT — Generali Români</title>
+<link href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&family=Oswald:wght@300;400;600;700&family=Special+Elite&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #0a0b0d;
+    --surface: #0f1114;
+    --surface2: #151820;
+    --border: #2a2e38;
+    --border-glow: #c8a84b;
+    --gold: #c8a84b;
+    --gold-dim: #7a6430;
+    --red: #8b1a1a;
+    --red-bright: #cc2222;
+    --green: #1a4a2e;
+    --green-bright: #2d7a4f;
+    --text: #ccc3a8;
+    --text-dim: #8a8070;
+    --text-bright: #f5edd8;
+    --stamp: rgba(139,26,26,0.15);
+    --scan: rgba(200,168,75,0.03);
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'Share Tech Mono', monospace;
+    min-height: 100vh;
+    overflow-x: hidden;
+    cursor: crosshair;
+  }
+
+
+
+  /* =================== HEADER =================== */
+  header {
+    border-bottom: 1px solid var(--border);
+    padding: 0;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .header-top {
+    display: none;
+  }
+
+  .header-main {
+    display: grid;
+    grid-template-columns: 1fr auto 1fr;
+    align-items: center;
+    padding: 24px 48px;
+    gap: 24px;
+    background: linear-gradient(180deg, #111318 0%, var(--bg) 100%);
+  }
+
+  .header-left {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+  }
+
+  .header-left .label {
+    font-size: 10px;
+    letter-spacing: 3px;
+    color: var(--text-dim);
+    text-transform: uppercase;
+  }
+
+  .header-left .value {
+    font-size: 12px;
+    color: var(--gold);
+    font-family: 'Share Tech Mono', monospace;
+  }
+
+  .header-center {
+    text-align: center;
+  }
+
+  .coat-of-arms {
+    width: 80px;
+    height: 80px;
+    margin: 0 auto 12px;
+    position: relative;
+  }
+
+  .coat-of-arms svg {
+    width: 100%;
+    height: 100%;
+    filter: drop-shadow(0 0 12px rgba(200,168,75,0.4));
+  }
+
+  .site-title {
+    font-family: 'Oswald', sans-serif;
+    font-size: 28px;
+    font-weight: 700;
+    letter-spacing: 6px;
+    color: var(--text-bright);
+    text-transform: uppercase;
+    line-height: 1;
+  }
+
+  .site-subtitle {
+    font-size: 10px;
+    letter-spacing: 4px;
+    color: var(--gold);
+    margin-top: 6px;
+    text-transform: uppercase;
+  }
+
+  .header-right {
+    text-align: right;
+  }
+
+  .access-level {
+    display: inline-block;
+    border: 1px solid var(--red-bright);
+    color: var(--red-bright);
+    font-size: 10px;
+    letter-spacing: 3px;
+    padding: 4px 10px;
+    margin-bottom: 8px;
+    animation: pulse-red 2s infinite;
+  }
+
+  @keyframes pulse-red {
+    0%,100% { box-shadow: 0 0 0 rgba(204,34,34,0); }
+    50% { box-shadow: 0 0 8px rgba(204,34,34,0.4); }
+  }
+
+  .header-border {
+    height: 2px;
+    background: linear-gradient(90deg, transparent, var(--gold), transparent);
+    opacity: 0.4;
+  }
+
+  /* =================== NAV TABS =================== */
+  .nav-strip {
+    display: flex;
+    gap: 2px;
+    padding: 0 48px;
+    background: var(--surface);
+    border-bottom: 1px solid var(--border);
+  }
+
+  .nav-tab {
+    font-family: 'Share Tech Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 2px;
+    padding: 12px 20px;
+    border: none;
+    background: transparent;
+    color: var(--text-dim);
+    cursor: pointer;
+    text-transform: uppercase;
+    border-bottom: 2px solid transparent;
+    transition: all 0.2s;
+    position: relative;
+  }
+
+  .nav-tab:hover, .nav-tab.active {
+    color: var(--gold);
+    border-bottom-color: var(--gold);
+    background: rgba(200,168,75,0.05);
+  }
+
+  /* =================== MAIN LAYOUT =================== */
+  .main-container {
+    display: grid;
+    grid-template-columns: 380px 1fr;
+    min-height: calc(100vh - 200px);
+  }
+
+  /* =================== LEFT PANEL — LIST =================== */
+  .generals-panel {
+    border-right: 1px solid var(--border);
+    background: var(--surface);
+    overflow-y: auto;
+    max-height: calc(100vh - 200px);
+    position: sticky;
+    top: 0;
+  }
+
+  .panel-header {
+    padding: 16px 24px;
+    border-bottom: 1px solid var(--border);
+    background: var(--surface2);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .panel-header h2 {
+    font-family: 'Oswald', sans-serif;
+    font-size: 13px;
+    letter-spacing: 4px;
+    color: var(--gold);
+    text-transform: uppercase;
+  }
+
+  .record-count {
+    font-size: 10px;
+    color: var(--text-dim);
+    background: var(--border);
+    padding: 2px 8px;
+  }
+
+  .search-box {
+    padding: 12px 24px;
+    border-bottom: 1px solid var(--border);
+    background: var(--surface2);
+  }
+
+  .search-input {
+    width: 100%;
+    background: var(--bg);
+    border: 1px solid var(--border);
+    color: var(--text);
+    font-family: 'Share Tech Mono', monospace;
+    font-size: 12px;
+    padding: 8px 12px;
+    outline: none;
+    transition: border-color 0.2s;
+  }
+
+  .search-input:focus {
+    border-color: var(--gold);
+  }
+
+  .search-input::placeholder {
+    color: var(--text-dim);
+  }
+
+  .general-card {
+    padding: 16px 24px;
+    border-bottom: 1px solid var(--border);
+    cursor: pointer;
+    transition: all 0.2s;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .general-card::before {
+    content: '';
+    position: absolute;
+    left: 0; top: 0; bottom: 0;
+    width: 3px;
+    background: var(--border);
+    transition: background 0.2s;
+  }
+
+  .general-card:hover {
+    background: rgba(200,168,75,0.05);
+  }
+
+  .general-card:hover::before {
+    background: var(--gold-dim);
+  }
+
+  .general-card.active {
+    background: rgba(200,168,75,0.08);
+  }
+
+  .general-card.active::before {
+    background: var(--gold);
+  }
+
+  .card-header-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: 4px;
+  }
+
+  .card-rank {
+    font-size: 10px;
+    letter-spacing: 1px;
+    color: #9a9282;
+    text-transform: uppercase;
+  }
+
+  .card-id {
+    font-size: 9px;
+    color: #6a6258;
+  }
+
+  .card-name {
+    font-family: 'Oswald', sans-serif;
+    font-size: 17px;
+    font-weight: 600;
+    color: #f5edd8;
+    letter-spacing: 1px;
+    margin-bottom: 4px;
+  }
+
+  .card-years {
+    font-size: 12px;
+    color: #9a9282;
+  }
+
+  .card-status {
+    display: inline-block;
+    font-size: 9px;
+    letter-spacing: 1px;
+    padding: 2px 6px;
+    margin-top: 6px;
+    text-transform: uppercase;
+  }
+
+  .status-executed { background: rgba(139,26,26,0.3); color: #ff8888; border: 1px solid #8b1a1a; }
+  .status-imprisoned { background: rgba(90,60,10,0.3); color: #ffcc66; border: 1px solid #7a6430; }
+  .status-deceased { background: rgba(40,40,50,0.5); color: #9090a0; border: 1px solid #444; }
+  .status-hero { background: rgba(20,60,30,0.4); color: #66cc88; border: 1px solid #2d7a4f; }
+
+  /* =================== RIGHT PANEL — DETAIL =================== */
+  .detail-panel {
+    padding: 0;
+    overflow-y: auto;
+    max-height: calc(100vh - 200px);
+    position: relative;
+  }
+
+  .detail-placeholder {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: 400px;
+    gap: 16px;
+    color: var(--text-dim);
+  }
+
+  .placeholder-icon {
+    width: 80px;
+    height: 80px;
+    border: 2px solid var(--border);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 32px;
+    opacity: 0.3;
+  }
+
+  .placeholder-text {
+    font-size: 11px;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    opacity: 0.4;
+  }
+
+  /* DETAIL VIEW */
+  .detail-view {
+    display: none;
+  }
+
+  .detail-view.visible {
+    display: block;
+    animation: fadeIn 0.4s ease;
+  }
+
+  @keyframes fadeIn {
+    from { opacity: 0; transform: translateY(8px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  .detail-header {
+    background: var(--surface2);
+    border-bottom: 1px solid var(--border);
+    padding: 32px 48px;
+    display: grid;
+    grid-template-columns: 1fr auto;
+    gap: 32px;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .detail-header::before {
+    content: attr(data-stamp);
+    position: absolute;
+    right: 48px;
+    top: 50%;
+    transform: translateY(-50%) rotate(-15deg);
+    font-family: 'Special Elite', cursive;
+    font-size: 52px;
+    color: var(--red-bright);
+    opacity: 0.12;
+    border: 4px solid var(--red-bright);
+    padding: 4px 12px;
+    white-space: nowrap;
+    pointer-events: none;
+  }
+
+  .detail-number {
+    font-size: 10px;
+    letter-spacing: 3px;
+    color: var(--text-dim);
+    margin-bottom: 8px;
+  }
+
+  .detail-rank-title {
+    font-size: 11px;
+    letter-spacing: 4px;
+    color: var(--gold);
+    text-transform: uppercase;
+    margin-bottom: 4px;
+  }
+
+  .detail-name {
+    font-family: 'Oswald', sans-serif;
+    font-size: 42px;
+    font-weight: 700;
+    color: var(--text-bright);
+    letter-spacing: 2px;
+    line-height: 1;
+    text-shadow: 0 0 40px rgba(200,168,75,0.15);
+    margin-bottom: 12px;
+  }
+
+  .detail-dates {
+    font-size: 13px;
+    color: var(--text-dim);
+    letter-spacing: 2px;
+  }
+
+  .detail-tags {
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+    margin-top: 16px;
+  }
+
+  .tag {
+    font-size: 9px;
+    letter-spacing: 2px;
+    padding: 3px 10px;
+    text-transform: uppercase;
+    border: 1px solid var(--border);
+    color: var(--text-dim);
+  }
+
+  .tag.highlight {
+    border-color: var(--gold-dim);
+    color: var(--gold);
+    background: rgba(200,168,75,0.05);
+  }
+
+  .portrait-box {
+    width: 140px;
+    height: 170px;
+    border: 1px solid var(--border);
+    background: var(--bg);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    flex-shrink: 0;
+  }
+
+  .portrait-box::after {
+    content: '';
+    position: absolute;
+    inset: 4px;
+    border: 1px solid var(--border);
+    opacity: 0.4;
+  }
+
+  .portrait-initials {
+    font-family: 'Oswald', sans-serif;
+    font-size: 48px;
+    font-weight: 700;
+    color: var(--border);
+    letter-spacing: -2px;
+  }
+
+  /* TABS inside detail */
+  .detail-tabs {
+    display: flex;
+    gap: 0;
+    border-bottom: 1px solid var(--border);
+    background: var(--surface);
+    padding: 0 48px;
+  }
+
+  .detail-tab {
+    font-family: 'Share Tech Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 2px;
+    padding: 12px 20px;
+    border: none;
+    background: transparent;
+    color: var(--text-dim);
+    cursor: pointer;
+    text-transform: uppercase;
+    border-bottom: 2px solid transparent;
+    transition: all 0.2s;
+  }
+
+  .detail-tab:hover { color: var(--text); }
+
+  .detail-tab.active {
+    color: var(--gold);
+    border-bottom-color: var(--gold);
+  }
+
+  .detail-content {
+    padding: 40px 48px;
+  }
+
+  .tab-pane { display: none; }
+  .tab-pane.active { display: block; }
+
+  /* BIO section */
+  .bio-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 24px;
+    margin-bottom: 40px;
+  }
+
+  .info-block {
+    border: 1px solid var(--border);
+    padding: 16px 20px;
+    background: rgba(255,255,255,0.01);
+    position: relative;
+  }
+
+  .info-block-label {
+    font-size: 9px;
+    letter-spacing: 3px;
+    color: var(--text-dim);
+    text-transform: uppercase;
+    margin-bottom: 6px;
+  }
+
+  .info-block-value {
+    font-family: 'Oswald', sans-serif;
+    font-size: 16px;
+    font-weight: 400;
+    color: var(--text-bright);
+    letter-spacing: 1px;
+  }
+
+  .section-title {
+    font-family: 'Oswald', sans-serif;
+    font-size: 13px;
+    letter-spacing: 5px;
+    color: var(--gold);
+    text-transform: uppercase;
+    margin-bottom: 16px;
+    padding-bottom: 8px;
+    border-bottom: 1px solid var(--border);
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+
+  .section-title::before {
+    content: '//';
+    color: var(--text-dim);
+    font-family: 'Share Tech Mono', monospace;
+    font-size: 12px;
+  }
+
+  .bio-text {
+    font-family: 'Special Elite', cursive;
+    font-size: 15.5px;
+    line-height: 2;
+    color: #d8cdb0;
+    margin-bottom: 24px;
+    border-left: 2px solid var(--border);
+    padding-left: 20px;
+  }
+
+  .bio-text p { margin-bottom: 16px; }
+
+  /* TIMELINE */
+  .timeline {
+    position: relative;
+    padding-left: 28px;
+  }
+
+  .timeline::before {
+    content: '';
+    position: absolute;
+    left: 0; top: 0; bottom: 0;
+    width: 1px;
+    background: linear-gradient(180deg, var(--gold), transparent);
+  }
+
+  .timeline-item {
+    position: relative;
+    margin-bottom: 24px;
+    padding-bottom: 24px;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .timeline-item:last-child { border-bottom: none; }
+
+  .timeline-item::before {
+    content: '';
+    position: absolute;
+    left: -32px; top: 4px;
+    width: 8px; height: 8px;
+    background: var(--gold);
+    transform: rotate(45deg);
+  }
+
+  .timeline-year {
+    font-size: 11px;
+    letter-spacing: 2px;
+    color: var(--gold);
+    margin-bottom: 4px;
+  }
+
+  .timeline-event {
+    font-family: 'Oswald', sans-serif;
+    font-size: 15px;
+    font-weight: 600;
+    color: var(--text-bright);
+    margin-bottom: 6px;
+  }
+
+  .timeline-desc {
+    font-size: 13px;
+    color: #a09880;
+    line-height: 1.7;
+  }
+
+  /* MEDALS */
+  .medals-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: 16px;
+  }
+
+  .medal-item {
+    border: 1px solid var(--border);
+    padding: 16px;
+    background: rgba(255,255,255,0.01);
+    display: flex;
+    gap: 12px;
+    align-items: flex-start;
+  }
+
+  .medal-icon {
+    width: 36px;
+    height: 36px;
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 20px;
+    background: rgba(200,168,75,0.1);
+    border: 1px solid var(--gold-dim);
+  }
+
+  .medal-name {
+    font-family: 'Oswald', sans-serif;
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--text-bright);
+    margin-bottom: 4px;
+  }
+
+  .medal-desc {
+    font-size: 12px;
+    color: #9a9282;
+    line-height: 1.5;
+  }
+
+  /* VERDICT box */
+  .verdict-box {
+    border: 1px solid var(--red-bright);
+    background: rgba(139,26,26,0.08);
+    padding: 24px;
+    margin-top: 24px;
+    position: relative;
+  }
+
+  .verdict-box::before {
+    content: 'DOSAR PENAL';
+    position: absolute;
+    top: -10px;
+    left: 20px;
+    background: var(--bg);
+    font-size: 9px;
+    letter-spacing: 3px;
+    color: var(--red-bright);
+    padding: 0 8px;
+  }
+
+  .verdict-text {
+    font-size: 14px;
+    line-height: 1.8;
+    color: #d09090;
+  }
+
+  /* QUOTE */
+  .quote-block {
+    border-left: 3px solid var(--gold);
+    padding: 16px 24px;
+    margin: 24px 0;
+    background: rgba(200,168,75,0.03);
+    font-family: 'Special Elite', cursive;
+    font-size: 16px;
+    color: var(--text-bright);
+    font-style: italic;
+    line-height: 1.7;
+  }
+
+  /* BOTTOM BAR */
+  footer {
+    border-top: 1px solid var(--border);
+    padding: 16px 48px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: var(--surface);
+    font-size: 10px;
+    color: var(--text-dim);
+    letter-spacing: 2px;
+  }
+
+  .footer-left { display: flex; gap: 24px; }
+
+  /* SCROLLBAR */
+  ::-webkit-scrollbar { width: 4px; }
+  ::-webkit-scrollbar-track { background: var(--bg); }
+  ::-webkit-scrollbar-thumb { background: var(--border); }
+  ::-webkit-scrollbar-thumb:hover { background: var(--gold-dim); }
+
+  /* RESPONSIVE */
+  @media (max-width: 900px) {
+    .main-container { grid-template-columns: 1fr; }
+    .generals-panel { max-height: none; position: relative; }
+    .detail-panel { max-height: none; }
+    .header-main { grid-template-columns: 1fr; text-align: center; gap: 16px; padding: 20px; }
+    .header-right { text-align: center; }
+    .detail-name { font-size: 28px; }
+    .detail-header { padding: 24px; grid-template-columns: 1fr; }
+    .portrait-box { display: none; }
+    .bio-grid { grid-template-columns: 1fr; }
+    .nav-strip { padding: 0 16px; overflow-x: auto; }
+    .detail-content { padding: 24px 20px; }
+    .detail-tabs { padding: 0 20px; }
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="header-main">
+    <div class="header-left">
+      <span class="label">Referință dosar</span>
+      <span class="value">ARH/MIL/1944-1965/GEN</span>
+      <span class="label" style="margin-top:8px">Clasificare</span>
+      <span class="value">SECRETUL STATULUI</span>
+    </div>
+    <div class="header-center">
+      <div class="coat-of-arms">
+        <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+          <!-- Shield shape -->
+          <path d="M10 10 L90 10 L90 65 L50 90 L10 65 Z" fill="none" stroke="#c8a84b" stroke-width="2" opacity="0.8"/>
+          <!-- Inner shield -->
+          <path d="M20 18 L80 18 L80 62 L50 82 L20 62 Z" fill="none" stroke="#c8a84b" stroke-width="1" opacity="0.4"/>
+          <!-- Eagle suggestion -->
+          <path d="M50 30 L40 40 L30 38 L35 45 L25 48 L35 50 L30 58 L40 55 L50 62 L60 55 L70 58 L65 50 L75 48 L65 45 L70 38 L60 40 Z" fill="#c8a84b" opacity="0.6"/>
+          <!-- Stars -->
+          <text x="50" y="28" text-anchor="middle" font-size="8" fill="#c8a84b" opacity="0.7">★ ★ ★</text>
+        </svg>
+      </div>
+      <div class="site-title">CONCURS ISTORIE</div>
+      <div class="site-subtitle">Generali Români</div>
+    </div>
+    <div class="header-right">
+      <div class="access-level">NIVEL 5 — DIRECTOR</div>
+      <br>
+      <div class="value" style="font-size:11px; color: var(--text-dim); letter-spacing:2px;">
+        <span id="clock"></span>
+      </div>
+      <br>
+      <div style="font-size:10px; color: var(--text-dim); letter-spacing:1px;">8 DOSARE ACTIVE</div>
+    </div>
+  </div>
+  <div class="header-border"></div>
+</header>
+
+<nav class="nav-strip">
+  <button class="nav-tab active">BAZA DE DATE</button>
+  <button class="nav-tab">CRONOLOGIE</button>
+  <button class="nav-tab">HARTA OPERAȚIUNILOR</button>
+  <button class="nav-tab">ARHIVĂ FOTOGRAFICĂ</button>
+</nav>
+
+<div class="main-container">
+  <!-- LEFT: Generals list -->
+  <aside class="generals-panel">
+    <div class="panel-header">
+      <h2>Dosare Personale</h2>
+      <span class="record-count">8 ÎNREGISTRĂRI</span>
+    </div>
+    <div class="search-box">
+      <input type="text" class="search-input" placeholder="> CAUTĂ DUPĂ NUME" oninput="filterGenerals(this.value)">
+    </div>
+    <div id="generals-list">
+      <!-- Generated by JS -->
+    </div>
+  </aside>
+
+  <!-- RIGHT: Detail panel -->
+  <main class="detail-panel" id="detail-panel">
+    <div class="detail-placeholder" id="placeholder">
+      <div class="placeholder-icon">⊙</div>
+      <div class="placeholder-text">Selectează un dosar pentru a vizualiza</div>
+      <div style="font-size:10px; color: var(--text-dim); opacity:0.3; letter-spacing:2px; margin-top:8px;">SISTEM PREGĂTIT — AȘTEPTARE</div>
+    </div>
+    <div id="detail-view" class="detail-view"></div>
+  </main>
+</div>
+
+<footer>
+  <div class="footer-left">
+    <span>© ARHIVA NAȚIONALĂ MILITARĂ</span>
+    <span>PROIECT MEMORIE</span>
+    <span>EDUCAȚIE ISTORICĂ</span>
+  </div>
+  <div>VERSIUNEA 1.0.0 — CLASIFICAT</div>
+</footer>
+
+<script>
+// =================== DATA ===================
+const generals = [
+  {
+    id: "GEN-001",
+    rank: "General de Corp de Armată",
+    name: "Nicolae Macici",
+    shortName: "Macici",
+    born: "1886",
+    died: "1950",
+    birthPlace: "Craiova, România",
+    status: "imprisoned",
+    statusLabel: "DECEDAT ÎN DETENȚIE",
+    stamp: "EXECUTAT",
+    initials: "NM",
+    tags: ["WWI", "WWII", "Mărășești", "Odessa", "Frontul de Est", "Aiud"],
+    decorations: [
+      { icon: "⭐", name: "Ordinul Mihai Viteazul", desc: "Pentru acte de vitejie excepționale" },
+      { icon: "🎖", name: "Crucea de Fier Germană", desc: "Clasa I și II" },
+      { icon: "🏅", name: "Ordinul Carol I", desc: "Cu spade, gradul Comandor" },
+    ],
+    bio: [
+      "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec eleifend eros ut accumsan convallis. Aliquam porta aliquam nisl ut fringilla. Quisque erat dui, viverra non mollis ac, mollis pulvinar risus. Sed varius, turpis sit amet ullamcorper cursus, magna orci vestibulum nulla, eu iaculis.",
+      "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec eleifend eros ut accumsan convallis. Aliquam porta aliquam nisl ut fringilla. Quisque erat dui, viverra non mollis ac, mollis pulvinar risus. Sed varius, turpis sit amet ullamcorper cursus, magna orci vestibulum nulla, eu iaculis.",
+      "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec eleifend eros ut accumsan convallis. Aliquam porta aliquam nisl ut fringilla. Quisque erat dui, viverra non mollis ac, mollis pulvinar risus. Sed varius, turpis sit amet ullamcorper cursus, magna orci vestibulum nulla, eu iaculis."
+    ],
+    timeline: [
+      { year: "1886", event: "Naștere", desc: "Craiova, România" },
+      { year: "1916-1917", event: "Bătălia de la Mărășești", desc: "Distins pentru vitejie în apărarea Moldovei" },
+      { year: "1941-1942", event: "Frontul de Est", desc: "Comandant pe frontul de la Odessa și Stalingrad" },
+      { year: "1945", event: "Tribunal Comunist", desc: "Condamnat la moarte, comutată în muncă silnică pe viață" },
+      { year: "1945-1950", event: "Detenție la Aiud", desc: "Supus înfometării sistematice, torturat psihic" },
+      { year: "1950", event: "Moarte prin inaniție", desc: "Decedat la 64 de ani, 40 kg. Îngropat în Râpa Robilor" },
+    ],
+    verdict: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus tortor ex, dictum vel iaculis ac, iaculis sed erat. Pellentesque pellentesque, lectus eget pharetra ultrices, augue ante vestibulum leo, id porta.",
+    quote: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus tortor ex, dictum vel iaculis ac, iaculis sed erat. Pellentesque pellentesque, lectus eget pharetra ultrices, augue ante vestibulum leo, id porta."
+  },
+  {
+    id: "GEN-002",
+    rank: "General de Divizie",
+    name: "Leonard Mociulschi",
+    shortName: "Mociulschi",
+    born: "1887",
+    died: "1949",
+    birthPlace: "Iași, România",
+    status: "imprisoned",
+    statusLabel: "DECEDAT ÎN DETENȚIE",
+    stamp: "DOSAR ACTIV",
+    initials: "LM",
+    tags: ["WWII", "Frontul de Est", "Munte", "Prizonier Politic"],
+    decorations: [
+      { icon: "⭐", name: "Ordinul Mihai Viteazul", desc: "Gradul III" },
+      { icon: "🎖", name: "Crucea de Fier", desc: "Acordată pentru merite militare" },
+      { icon: "🏅", name: "Ordinul Coroana României", desc: "Cu spade" },
+    ],
+    bio: [
+      "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec eleifend eros ut accumsan convallis. Aliquam porta aliquam nisl ut fringilla. Quisque erat dui, viverra non mollis ac, mollis pulvinar risus. Sed varius, turpis sit amet ullamcorper cursus, magna orci vestibulum nulla, eu iaculis.",
+      "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec eleifend eros ut accumsan convallis. Aliquam porta aliquam nisl ut fringilla. Quisque erat dui, viverra non mollis ac, mollis pulvinar risus. Sed varius, turpis sit amet ullamcorper cursus, magna orci vestibulum nulla, eu iaculis.",
+      "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec eleifend eros ut accumsan convallis. Aliquam porta aliquam nisl ut fringilla. Quisque erat dui, viverra non mollis ac, mollis pulvinar risus. Sed varius, turpis sit amet ullamcorper cursus, magna orci vestibulum nulla, eu iaculis."
+    ],
+    timeline: [
+      { year: "1887", event: "Naștere", desc: "Iași, România" },
+      { year: "1941-1944", event: "Frontul de Est", desc: "Comandant al trupelor de munte, Caucaz" },
+      { year: "1945", event: "Arest Comunist", desc: "Arestat imediat după preluarea puterii" },
+      { year: "1946", event: "Tribunal Poporului", desc: "Condamnat pe baza unor acuzații politice" },
+      { year: "1949", event: "Moarte în Detenție", desc: "Decedat în închisorile comuniste" },
+    ],
+    verdict: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus tortor ex, dictum vel iaculis ac, iaculis sed erat. Pellentesque pellentesque, lectus eget pharetra ultrices, augue ante vestibulum leo, id porta.",
+    quote: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus tortor ex, dictum vel iaculis ac, iaculis sed erat. Pellentesque pellentesque, lectus eget pharetra ultrices, augue ante vestibulum leo, id porta."
+  },
+  {
+    id: "GEN-003",
+    rank: "General de Divizie",
+    name: "Ioan Dumitrache",
+    shortName: "Dumitrache",
+    born: "1893",
+    died: "1977",
+    birthPlace: "București, România",
+    status: "imprisoned",
+    statusLabel: "REABILITAT POSTUM",
+    stamp: "MARTIR",
+    initials: "ID",
+    tags: ["WWII", "Nalcik", "Munte", "Oarba de Mureș", "Aiud"],
+    decorations: [
+      { icon: "🎖", name: "Crucea de Cavaler a Crucii de Fier", desc: "Acordată personal de Hitler pentru cucerirea Nalcikului" },
+      { icon: "⭐", name: "Ordinul Mihai Viteazul", desc: "Clasa II — pentru merite excepționale" },
+      { icon: "🏅", name: "Ordinul Steaua României", desc: "Cu spade, gradul Comandor" },
+      { icon: "🎗", name: "Medalia Crucea Comemorativă", desc: "A Celui de-al Doilea Război Mondial" },
+    ],
+    bio: [
+      "Generalul Ioan Dumitrache, supranumit «Tigrul din Caucaz», a fost comandantul faimoasei Divizii 2 Munte. În 1942, a realizat una dintre cele mai strălucite victorii militare românești din Al Doilea Război Mondial: cucerirea Nalcikului, luând peste 3.000 de prizonieri sovietici cu pierderi minime. Performanța i-a adus Crucea de Cavaler a Crucii de Fier.",
+      "Drama sa s-a consumat în toamna lui 1944, la Oarba de Mureș. Analizând terenul cu ochiul său de expert în lupta montană, Dumitrache a propus o manevră de flancare pentru a evita carnagiul. Mareșalul Malinovski a respins planul — ordinul sovietic era simplu: «Înainte!»",
+      "Generalul a fost obligat, sub amenințarea tribunalului militar sovietic, să-și trimită vânătorii de munte la atac frontal suicidar peste râul Mureș, direct în gura mitralierelor germane. Apa Mureșului s-a înroșit de sânge pe kilometri întregi. Aproximativ 11.000 de soldați români au murit pentru a cuceri un singur deal — o jertfă care putea fi evitată.",
+      "Dumitrache a trăit restul vieții cu această durere imensă, știind că oamenii săi au fost sacrificați nu de inamic, ci de «aliat». Arestat în 1949, anchetat brutal de Securitate, a petrecut ani grei la Jilava și Aiud, fiind eliberat abia în 1964, bătrân și bolnav. A murit în 1977, purtând pe umeri povara a 11.000 de cruci invizibile."
+    ],
+    timeline: [
+      { year: "1893", event: "Naștere", desc: "București, România" },
+      { year: "1942", event: "Cucerirea Nalcikului", desc: "3.000+ prizonieri luați cu pierderi minime — un record tactic" },
+      { year: "1942", event: "Crucea de Cavaler", desc: "Decorat personal de Hitler pentru performance la Nalcik" },
+      { year: "Sep-Oct 1944", event: "Oarba de Mureș", desc: "~11.000 soldați români sacrificați prin ordin sovietic" },
+      { year: "1949", event: "Arest de Securitate", desc: "Anchetat brutal, acuzat de «crime de război» în URSS" },
+      { year: "1949-1964", event: "Jilava & Aiud", desc: "15 ani de detenție politică în condiții inumane" },
+      { year: "1977", event: "Deces", desc: "A murit purtând povara sacrificiului de la Oarba de Mureș" },
+    ],
+    verdict: "Arestat în 1949 de Securitate, acuzat de «crime de război» pentru campania din URSS. Anchetat brutal la Jilava și Aiud. Eliberat în 1964, după 15 ani de detenție. Tragedia adevărată: a fost forțat de sovieti să sacrifice 11.000 de soldați români la Oarba de Mureș — o crimă comisă de «aliatul» sovietic, mascată drept eroism.",
+    quote: "Am știut că îi trimit la moarte. Știam că altă cale nu există sub amenințarea armei sovietice. Cu această greutate am trăit și cu ea am murit."
+  },
+  {
+    id: "GEN-004",
+    rank: "General de Corp de Armată",
+    name: "Gheorghe Avramescu",
+    shortName: "Avramescu",
+    born: "1884",
+    died: "1945",
+    birthPlace: "Caracal, Olt",
+    status: "executed",
+    statusLabel: "ASASINAT DE SOVIETICI",
+    stamp: "DOSAR ÎNCHIS",
+    initials: "GA",
+    tags: ["WWII", "Frontul de Est", "Crimă de Război Sovietică", "Dispărut"],
+    decorations: [
+      { icon: "⭐", name: "Ordinul Mihai Viteazul", desc: "Clasa II" },
+      { icon: "🏅", name: "Ordinul Coroana României", desc: "Gradul Mare Cruce" },
+      { icon: "🎖", name: "Medalia Serviciu Credincios", desc: "Gradul I — serviciu exemplar" },
+    ],
+    bio: [
+      "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec eleifend eros ut accumsan convallis. Aliquam porta aliquam nisl ut fringilla. Quisque erat dui, viverra non mollis ac, mollis pulvinar risus. Sed varius, turpis sit amet ullamcorper cursus, magna orci vestibulum nulla, eu iaculis.",
+      "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec eleifend eros ut accumsan convallis. Aliquam porta aliquam nisl ut fringilla. Quisque erat dui, viverra non mollis ac, mollis pulvinar risus. Sed varius, turpis sit amet ullamcorper cursus, magna orci vestibulum nulla, eu iaculis.",
+      "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec eleifend eros ut accumsan convallis. Aliquam porta aliquam nisl ut fringilla. Quisque erat dui, viverra non mollis ac, mollis pulvinar risus. Sed varius, turpis sit amet ullamcorper cursus, magna orci vestibulum nulla, eu iaculis."
+    ],
+    timeline: [
+      { year: "1884", event: "Naștere", desc: "Caracal, județul Olt" },
+      { year: "1941-1944", event: "Armata 4 Română", desc: "Comandant pe Frontul de Est" },
+      { year: "Aug 1944", event: "Schimbarea Frontului", desc: "România întoarce armele împotriva Germaniei" },
+      { year: "Mar 1945", event: "Arest Sovietic", desc: "Reținut de NKVD fără explicații oficiale" },
+      { year: "1945", event: "Dispariție", desc: "Probabil executat de NKVD — niciun raport oficial nu a fost eliberat" },
+    ],
+    verdict: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus tortor ex, dictum vel iaculis ac, iaculis sed erat. Pellentesque pellentesque, lectus eget pharetra ultrices, augue ante vestibulum leo, id porta.",
+    quote: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus tortor ex, dictum vel iaculis ac, iaculis sed erat. Pellentesque pellentesque, lectus eget pharetra ultrices, augue ante vestibulum leo, id porta."
+  },
+  {
+    id: "GEN-005",
+    rank: "Comandor Aviație",
+    name: "Horia Agarici",
+    shortName: "Agarici",
+    born: "1903",
+    died: "1973",
+    birthPlace: "Iași, România",
+    status: "hero",
+    statusLabel: "AS AL AVIAȚIEI",
+    stamp: "EROU NAȚIONAL",
+    initials: "HA",
+    tags: ["Aviație", "WWII", "Vânătoare", "As de Luptă", "Ploiești"],
+    decorations: [
+      { icon: "✈", name: "Ordinul Aeronautic Virtutea Aeronautică", desc: "Clasa Cavaler, pentru victorii aeriene" },
+      { icon: "⭐", name: "Ordinul Mihai Viteazul", desc: "Clasa III" },
+      { icon: "🎖", name: "Crucea de Fier Germană", desc: "Clasa II" },
+      { icon: "🏅", name: "Medalia Aeronautică", desc: "Multiple victorii aeriene confirmate" },
+    ],
+    bio: [
+      "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec eleifend eros ut accumsan convallis. Aliquam porta aliquam nisl ut fringilla. Quisque erat dui, viverra non mollis ac, mollis pulvinar risus. Sed varius, turpis sit amet ullamcorper cursus, magna orci vestibulum nulla, eu iaculis.",
+      "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec eleifend eros ut accumsan convallis. Aliquam porta aliquam nisl ut fringilla. Quisque erat dui, viverra non mollis ac, mollis pulvinar risus. Sed varius, turpis sit amet ullamcorper cursus, magna orci vestibulum nulla, eu iaculis.",
+      "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec eleifend eros ut accumsan convallis. Aliquam porta aliquam nisl ut fringilla. Quisque erat dui, viverra non mollis ac, mollis pulvinar risus. Sed varius, turpis sit amet ullamcorper cursus, magna orci vestibulum nulla, eu iaculis."
+    ],
+    timeline: [
+      { year: "1903", event: "Naștere", desc: "Iași, România" },
+      { year: "1940", event: "Brevetul de Pilot de Vânătoare", desc: "Calificat pe aeronave moderne" },
+      { year: "1941-1944", event: "As al Aviației", desc: "Multiple victorii aeriene confirmate pe Frontul de Est" },
+      { year: "1943-1944", event: "Apărarea Ploieștiului", desc: "Misiuni de intercepție împotriva bombardierelor americane" },
+      { year: "1944+", event: "Supraviețuire", desc: "Unul dintre puținii generali care au supraviețuit perioadei comuniste" },
+      { year: "1973", event: "Deces", desc: "Decedat la Iași, la 70 de ani" },
+    ],
+    verdict: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus tortor ex, dictum vel iaculis ac, iaculis sed erat. Pellentesque pellentesque, lectus eget pharetra ultrices, augue ante vestibulum leo, id porta.",
+    quote: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus tortor ex, dictum vel iaculis ac, iaculis sed erat. Pellentesque pellentesque, lectus eget pharetra ultrices, augue ante vestibulum leo, id porta."
+  },
+  {
+    id: "GEN-006",
+    rank: "General de Brigadă",
+    name: "Radu Korne",
+    shortName: "Korne",
+    born: "1887",
+    died: "1952",
+    birthPlace: "Timișoara, România",
+    status: "imprisoned",
+    statusLabel: "DECEDAT ÎN DETENȚIE",
+    stamp: "DOSAR ACTIV",
+    initials: "RK",
+    tags: ["WWII", "Cavalerie", "Frontul de Est", "Prizonier Politic"],
+    decorations: [
+      { icon: "⭐", name: "Ordinul Mihai Viteazul", desc: "Gradul III, pentru vitejie" },
+      { icon: "🏇", name: "Medalia Cavaleriei", desc: "Serviciu exemplar în unitățile de cavalerie" },
+      { icon: "🏅", name: "Ordinul Coroana României", desc: "Cu spade" },
+    ],
+    bio: [
+      "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec eleifend eros ut accumsan convallis. Aliquam porta aliquam nisl ut fringilla. Quisque erat dui, viverra non mollis ac, mollis pulvinar risus. Sed varius, turpis sit amet ullamcorper cursus, magna orci vestibulum nulla, eu iaculis.",
+      "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec eleifend eros ut accumsan convallis. Aliquam porta aliquam nisl ut fringilla. Quisque erat dui, viverra non mollis ac, mollis pulvinar risus. Sed varius, turpis sit amet ullamcorper cursus, magna orci vestibulum nulla, eu iaculis.",
+      "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec eleifend eros ut accumsan convallis. Aliquam porta aliquam nisl ut fringilla. Quisque erat dui, viverra non mollis ac, mollis pulvinar risus. Sed varius, turpis sit amet ullamcorper cursus, magna orci vestibulum nulla, eu iaculis."
+    ],
+    timeline: [
+      { year: "1887", event: "Naștere", desc: "Timișoara, Banat" },
+      { year: "1916-1918", event: "Primul Război Mondial", desc: "Serviciu în unitățile de cavalerie" },
+      { year: "1941-1944", event: "Frontul de Est", desc: "Comandant cavalerie, operațiuni rapide" },
+      { year: "1946", event: "Arest Comunist", desc: "Reținut de Securitate" },
+      { year: "1946-1952", event: "Detenție Aiud", desc: "Ani de temniță în condiții inumane" },
+      { year: "1952", event: "Deces", desc: "Decedat în detenție la 65 de ani" },
+    ],
+    verdict: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus tortor ex, dictum vel iaculis ac, iaculis sed erat. Pellentesque pellentesque, lectus eget pharetra ultrices, augue ante vestibulum leo, id porta.",
+    quote: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus tortor ex, dictum vel iaculis ac, iaculis sed erat. Pellentesque pellentesque, lectus eget pharetra ultrices, augue ante vestibulum leo, id porta."
+  },
+  {
+    id: "GEN-007",
+    rank: "General de Brigadă",
+    name: "Ion Tobă Hatmanul",
+    shortName: "Tobă",
+    born: "1890",
+    died: "1958",
+    birthPlace: "Moldova, România",
+    status: "imprisoned",
+    statusLabel: "REABILITAT POSTUM",
+    stamp: "MARTIR",
+    initials: "IT",
+    tags: ["WWII", "Moldova", "Infanterie", "Prizonier Politic", "Hatman"],
+    decorations: [
+      { icon: "⭐", name: "Ordinul Mihai Viteazul", desc: "Clasa III" },
+      { icon: "🏅", name: "Ordinul Serviciu Credincios", desc: "Cu spade, gradul Comandor" },
+      { icon: "🎖", name: "Medalia Virtutea Militară", desc: "Gradul I" },
+    ],
+    bio: [
+      "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec eleifend eros ut accumsan convallis. Aliquam porta aliquam nisl ut fringilla. Quisque erat dui, viverra non mollis ac, mollis pulvinar risus. Sed varius, turpis sit amet ullamcorper cursus, magna orci vestibulum nulla, eu iaculis.",
+      "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec eleifend eros ut accumsan convallis. Aliquam porta aliquam nisl ut fringilla. Quisque erat dui, viverra non mollis ac, mollis pulvinar risus. Sed varius, turpis sit amet ullamcorper cursus, magna orci vestibulum nulla, eu iaculis.",
+      "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec eleifend eros ut accumsan convallis. Aliquam porta aliquam nisl ut fringilla. Quisque erat dui, viverra non mollis ac, mollis pulvinar risus. Sed varius, turpis sit amet ullamcorper cursus, magna orci vestibulum nulla, eu iaculis."
+    ],
+    timeline: [
+      { year: "1890", event: "Naștere", desc: "Moldova, România" },
+      { year: "1916-1918", event: "Primul Război", desc: "Distins în operațiunile din Moldova" },
+      { year: "1941-1944", event: "Al Doilea Război", desc: "Comandant de infanterie, Frontul de Est" },
+      { year: "1947", event: "Arest", desc: "Reținut de Securitate în valul represiunilor" },
+      { year: "1947-1958", event: "Detenție", desc: "Ani de închisoare politică" },
+      { year: "1958", event: "Deces", desc: "Decedat la 68 de ani, cu puțin înainte de amnistie" },
+    ],
+    verdict: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus tortor ex, dictum vel iaculis ac, iaculis sed erat. Pellentesque pellentesque, lectus eget pharetra ultrices, augue ante vestibulum leo, id porta.",
+    quote: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus tortor ex, dictum vel iaculis ac, iaculis sed erat. Pellentesque pellentesque, lectus eget pharetra ultrices, augue ante vestibulum leo, id porta."
+  },
+  {
+    id: "GEN-008",
+    rank: "General de Brigadă",
+    name: "Henri Cihoski",
+    shortName: "Cihoski",
+    born: "1891",
+    died: "1962",
+    birthPlace: "Galați, România",
+    status: "imprisoned",
+    statusLabel: "REABILITAT POSTUM",
+    stamp: "DOSAR ACTIV",
+    initials: "HC",
+    tags: ["WWII", "Artilerie", "Frontul de Est", "Prizonier Politic"],
+    decorations: [
+      { icon: "💣", name: "Ordinul Artileriei", desc: "Serviciu distins în artileria română" },
+      { icon: "⭐", name: "Ordinul Steaua României", desc: "Cu spade" },
+      { icon: "🏅", name: "Medalia Serviciu Credincios", desc: "Clasa I" },
+    ],
+    bio: [
+      "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec eleifend eros ut accumsan convallis. Aliquam porta aliquam nisl ut fringilla. Quisque erat dui, viverra non mollis ac, mollis pulvinar risus. Sed varius, turpis sit amet ullamcorper cursus, magna orci vestibulum nulla, eu iaculis.",
+      "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec eleifend eros ut accumsan convallis. Aliquam porta aliquam nisl ut fringilla. Quisque erat dui, viverra non mollis ac, mollis pulvinar risus. Sed varius, turpis sit amet ullamcorper cursus, magna orci vestibulum nulla, eu iaculis.",
+      "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec eleifend eros ut accumsan convallis. Aliquam porta aliquam nisl ut fringilla. Quisque erat dui, viverra non mollis ac, mollis pulvinar risus. Sed varius, turpis sit amet ullamcorper cursus, magna orci vestibulum nulla, eu iaculis."
+    ],
+    timeline: [
+      { year: "1891", event: "Naștere", desc: "Galați, România" },
+      { year: "1916-1918", event: "Primul Război", desc: "Artilerist distinst" },
+      { year: "1941-1944", event: "Frontul de Est", desc: "Coordonarea artileriei în bătălii majore" },
+      { year: "1948", event: "Arest Comunist", desc: "Reținut în valul represiunilor postbelice" },
+      { year: "1948-1956", event: "Detenție Politică", desc: "Ani de temniță" },
+      { year: "1962", event: "Deces", desc: "Decedat la 71 de ani" },
+    ],
+    verdict: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus tortor ex, dictum vel iaculis ac, iaculis sed erat. Pellentesque pellentesque, lectus eget pharetra ultrices, augue ante vestibulum leo, id porta.",
+    quote: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus tortor ex, dictum vel iaculis ac, iaculis sed erat. Pellentesque pellentesque, lectus eget pharetra ultrices, augue ante vestibulum leo, id porta."
+  }
+];
+
+// =================== RENDER ===================
+function getStatusClass(status) {
+  const map = {executed:'status-executed', imprisoned:'status-imprisoned', deceased:'status-deceased', hero:'status-hero'};
+  return map[status] || 'status-deceased';
+}
+
+function renderList(data) {
+  const container = document.getElementById('generals-list');
+  container.innerHTML = '';
+  data.forEach((g, i) => {
+    const div = document.createElement('div');
+    div.className = 'general-card';
+    div.dataset.id = g.id;
+    div.onclick = () => selectGeneral(g.id);
+    div.innerHTML = `
+      <div class="card-header-row">
+        <span class="card-rank">${g.rank}</span>
+        <span class="card-id">${g.id}</span>
+      </div>
+      <div class="card-name">${g.name}</div>
+      <div class="card-years">${g.born} — ${g.died}</div>
+      <span class="card-status ${getStatusClass(g.status)}">${g.statusLabel}</span>
+    `;
+    container.appendChild(div);
+  });
+}
+
+function filterGenerals(query) {
+  const q = query.toLowerCase();
+  const filtered = generals.filter(g =>
+    g.name.toLowerCase().includes(q) ||
+    g.rank.toLowerCase().includes(q) ||
+    g.tags.some(t => t.toLowerCase().includes(q))
+  );
+  renderList(filtered);
+}
+
+let activeId = null;
+
+function selectGeneral(id) {
+  activeId = id;
+  const g = generals.find(x => x.id === id);
+
+  // Update active card
+  document.querySelectorAll('.general-card').forEach(c => {
+    c.classList.toggle('active', c.dataset.id === id);
+  });
+
+  // Hide placeholder
+  document.getElementById('placeholder').style.display = 'none';
+
+  // Build detail view
+  const view = document.getElementById('detail-view');
+  view.className = 'detail-view visible';
+
+  view.innerHTML = `
+    <div class="detail-header" data-stamp="${g.stamp}">
+      <div>
+        <div class="detail-number">${g.id} — DOSAR PERSONAL CLASIFICAT</div>
+        <div class="detail-rank-title">${g.rank}</div>
+        <div class="detail-name">${g.name}</div>
+        <div class="detail-dates">${g.born} — ${g.died} &nbsp;|&nbsp; ${g.birthPlace}</div>
+        <div class="detail-tags">
+          <span class="card-status ${getStatusClass(g.status)}">${g.statusLabel}</span>
+          ${g.tags.map(t => `<span class="tag">${t}</span>`).join('')}
+        </div>
+      </div>
+      <div class="portrait-box">
+        <div class="portrait-initials">${g.initials}</div>
+      </div>
+    </div>
+
+    <div class="detail-tabs">
+      <button class="detail-tab active" onclick="switchTab(this,'bio')">BIOGRAFIE</button>
+      <button class="detail-tab" onclick="switchTab(this,'timeline')">CRONOLOGIE</button>
+      <button class="detail-tab" onclick="switchTab(this,'medals')">DECORAȚII</button>
+      <button class="detail-tab" onclick="switchTab(this,'verdict')">DOSAR PENAL</button>
+    </div>
+
+    <div class="detail-content">
+      <div id="tab-bio" class="tab-pane active">
+        <div class="section-title">Biografie</div>
+        <div class="bio-text">
+          ${g.bio.map(p => `<p>${p}</p>`).join('')}
+        </div>
+        <div class="quote-block">"${g.quote}"</div>
+      </div>
+
+      <div id="tab-timeline" class="tab-pane">
+        <div class="section-title">Cronologie</div>
+        <div class="timeline">
+          ${g.timeline.map(t => `
+            <div class="timeline-item">
+              <div class="timeline-year">${t.year}</div>
+              <div class="timeline-event">${t.event}</div>
+              <div class="timeline-desc">${t.desc}</div>
+            </div>
+          `).join('')}
+        </div>
+      </div>
+
+      <div id="tab-medals" class="tab-pane">
+        <div class="section-title">Decorații Militare</div>
+        <div class="medals-grid">
+          ${g.decorations.map(d => `
+            <div class="medal-item">
+              <div class="medal-icon">${d.icon}</div>
+              <div>
+                <div class="medal-name">${d.name}</div>
+                <div class="medal-desc">${d.desc}</div>
+              </div>
+            </div>
+          `).join('')}
+        </div>
+      </div>
+
+      <div id="tab-verdict" class="tab-pane">
+        <div class="section-title">Dosar Juridic & Represiune</div>
+        <div class="verdict-box">
+          <div class="verdict-text">${g.verdict}</div>
+        </div>
+        <div class="quote-block" style="margin-top:24px;">"${g.quote}"</div>
+      </div>
+    </div>
+  `;
+}
+
+function switchTab(btn, tab) {
+  btn.closest('.detail-view').querySelectorAll('.detail-tab').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  btn.closest('.detail-content').querySelectorAll('.tab-pane').forEach(p => p.classList.remove('active'));
+  document.getElementById('tab-' + tab).classList.add('active');
+}
+
+// Clock
+function updateClock() {
+  const now = new Date();
+  document.getElementById('clock').textContent =
+    now.toLocaleDateString('ro-RO') + ' ' +
+    now.toLocaleTimeString('ro-RO', {hour:'2-digit',minute:'2-digit',second:'2-digit'});
+}
+setInterval(updateClock, 1000);
+updateClock();
+
+// Init
+renderList(generals);
+</script>
+</body>
+</html>
