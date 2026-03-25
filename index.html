@@ -714,6 +714,339 @@
     line-height: 1.7;
   }
 
+  /* =================== EXTRA PAGES =================== */
+  .page { display: none; }
+  .page.active { display: block; }
+
+  /* Page wrapper shared */
+  .page-content {
+    padding: 48px;
+    max-width: 1200px;
+  }
+
+  .page-title {
+    font-family: 'Oswald', sans-serif;
+    font-size: 11px;
+    letter-spacing: 5px;
+    color: var(--gold);
+    text-transform: uppercase;
+    margin-bottom: 8px;
+  }
+
+  .page-heading {
+    font-family: 'Oswald', sans-serif;
+    font-size: 36px;
+    font-weight: 700;
+    color: var(--text-bright);
+    letter-spacing: 2px;
+    margin-bottom: 40px;
+    padding-bottom: 16px;
+    border-bottom: 1px solid var(--border);
+  }
+
+  /* ---- CRONOLOGIE ---- */
+  .big-timeline {
+    position: relative;
+    padding-left: 120px;
+  }
+
+  .big-timeline::before {
+    content: '';
+    position: absolute;
+    left: 80px; top: 0; bottom: 0;
+    width: 2px;
+    background: linear-gradient(180deg, var(--gold), rgba(200,168,75,0.1));
+  }
+
+  .big-timeline-item {
+    position: relative;
+    margin-bottom: 36px;
+    padding: 20px 24px;
+    border: 1px solid var(--border);
+    background: var(--surface);
+    transition: border-color 0.2s;
+  }
+
+  .big-timeline-item:hover { border-color: var(--gold-dim); }
+
+  .big-timeline-item::before {
+    content: '';
+    position: absolute;
+    left: -48px; top: 24px;
+    width: 12px; height: 12px;
+    background: var(--gold);
+    transform: rotate(45deg);
+    border: 2px solid var(--bg);
+  }
+
+  .big-timeline-year {
+    position: absolute;
+    left: -115px; top: 20px;
+    font-size: 13px;
+    font-weight: 700;
+    color: var(--gold);
+    letter-spacing: 1px;
+    text-align: right;
+    width: 60px;
+  }
+
+  .big-timeline-general {
+    font-size: 10px;
+    letter-spacing: 3px;
+    color: var(--text-dim);
+    text-transform: uppercase;
+    margin-bottom: 4px;
+  }
+
+  .big-timeline-event {
+    font-family: 'Oswald', sans-serif;
+    font-size: 18px;
+    font-weight: 600;
+    color: var(--text-bright);
+    margin-bottom: 6px;
+  }
+
+  .big-timeline-desc {
+    font-size: 13px;
+    color: var(--text);
+    line-height: 1.7;
+  }
+
+  .timeline-era {
+    font-family: 'Oswald', sans-serif;
+    font-size: 11px;
+    letter-spacing: 4px;
+    color: var(--red-bright);
+    text-transform: uppercase;
+    margin: 40px 0 16px;
+    display: flex;
+    align-items: center;
+    gap: 16px;
+  }
+
+  .timeline-era::after {
+    content: '';
+    flex: 1;
+    height: 1px;
+    background: var(--red-bright);
+    opacity: 0.3;
+  }
+
+  /* ---- HARTA ---- */
+  .map-page { padding: 0; }
+
+  .map-layout {
+    display: grid;
+    grid-template-columns: 300px 1fr;
+    min-height: calc(100vh - 200px);
+  }
+
+  .map-sidebar {
+    background: var(--surface);
+    border-right: 1px solid var(--border);
+    overflow-y: auto;
+    padding: 24px;
+  }
+
+  .map-sidebar h3 {
+    font-family: 'Oswald', sans-serif;
+    font-size: 11px;
+    letter-spacing: 4px;
+    color: var(--gold);
+    text-transform: uppercase;
+    margin-bottom: 16px;
+    padding-bottom: 8px;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .map-location-btn {
+    display: block;
+    width: 100%;
+    text-align: left;
+    background: none;
+    border: 1px solid var(--border);
+    color: var(--text);
+    font-family: 'Share Tech Mono', monospace;
+    font-size: 12px;
+    padding: 10px 14px;
+    margin-bottom: 8px;
+    cursor: pointer;
+    transition: all 0.2s;
+    position: relative;
+  }
+
+  .map-location-btn:hover, .map-location-btn.active {
+    border-color: var(--gold-dim);
+    background: rgba(200,168,75,0.06);
+    color: var(--text-bright);
+  }
+
+  .map-location-btn .loc-name {
+    font-weight: bold;
+    display: block;
+    margin-bottom: 2px;
+  }
+
+  .map-location-btn .loc-sub {
+    font-size: 10px;
+    color: var(--text-dim);
+    letter-spacing: 1px;
+  }
+
+  .map-location-btn .loc-dot {
+    position: absolute;
+    right: 12px; top: 50%;
+    transform: translateY(-50%);
+    width: 8px; height: 8px;
+    border-radius: 50%;
+  }
+
+  .dot-red { background: var(--red-bright); }
+  .dot-gold { background: var(--gold); }
+  .dot-green { background: var(--green-bright); }
+
+  .map-area {
+    background: #0d1117;
+    position: relative;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .map-svg-wrap {
+    width: 100%;
+    height: 100%;
+    position: relative;
+  }
+
+  .map-info-card {
+    position: absolute;
+    bottom: 32px; right: 32px;
+    width: 300px;
+    background: var(--surface2);
+    border: 1px solid var(--border);
+    padding: 20px;
+    display: none;
+  }
+
+  .map-info-card.visible { display: block; }
+
+  .map-info-title {
+    font-family: 'Oswald', sans-serif;
+    font-size: 18px;
+    color: var(--text-bright);
+    margin-bottom: 4px;
+  }
+
+  .map-info-year { font-size: 11px; color: var(--gold); letter-spacing: 2px; margin-bottom: 8px; }
+  .map-info-text { font-size: 12px; color: var(--text); line-height: 1.7; }
+
+  .map-info-generals {
+    margin-top: 12px;
+    padding-top: 12px;
+    border-top: 1px solid var(--border);
+    font-size: 11px;
+    color: var(--text-dim);
+  }
+
+  .map-info-generals span {
+    display: inline-block;
+    background: rgba(200,168,75,0.1);
+    border: 1px solid var(--gold-dim);
+    color: var(--gold);
+    font-size: 10px;
+    padding: 2px 8px;
+    margin: 2px;
+  }
+
+  /* ---- ARHIVĂ FOTO ---- */
+  .photo-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 24px;
+  }
+
+  .photo-card {
+    border: 1px solid var(--border);
+    background: var(--surface);
+    overflow: hidden;
+    transition: border-color 0.2s;
+    cursor: pointer;
+  }
+
+  .photo-card:hover { border-color: var(--gold-dim); }
+
+  .photo-placeholder {
+    aspect-ratio: 4/3;
+    background: var(--surface2);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .photo-placeholder::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: repeating-linear-gradient(
+      45deg,
+      transparent,
+      transparent 10px,
+      rgba(255,255,255,0.01) 10px,
+      rgba(255,255,255,0.01) 11px
+    );
+  }
+
+  .photo-initials-big {
+    font-family: 'Oswald', sans-serif;
+    font-size: 64px;
+    font-weight: 700;
+    color: var(--border);
+    letter-spacing: -4px;
+    line-height: 1;
+  }
+
+  .photo-year-badge {
+    font-size: 10px;
+    letter-spacing: 2px;
+    color: var(--text-dim);
+    background: var(--bg);
+    padding: 3px 10px;
+    border: 1px solid var(--border);
+  }
+
+  .photo-card-info {
+    padding: 16px;
+    border-top: 1px solid var(--border);
+  }
+
+  .photo-card-name {
+    font-family: 'Oswald', sans-serif;
+    font-size: 16px;
+    font-weight: 600;
+    color: var(--text-bright);
+    margin-bottom: 4px;
+  }
+
+  .photo-card-rank {
+    font-size: 10px;
+    color: var(--text-dim);
+    letter-spacing: 1px;
+    margin-bottom: 8px;
+  }
+
+  .photo-caption {
+    font-size: 11px;
+    color: var(--text-dim);
+    font-style: italic;
+    line-height: 1.5;
+  }
+
   /* BOTTOM BAR */
   footer {
     border-top: 1px solid var(--border);
@@ -792,14 +1125,15 @@
 </header>
 
 <nav class="nav-strip">
-  <button class="nav-tab active">BAZA DE DATE</button>
-  <button class="nav-tab">CRONOLOGIE</button>
-  <button class="nav-tab">HARTA OPERAȚIUNILOR</button>
-  <button class="nav-tab">ARHIVĂ FOTOGRAFICĂ</button>
+  <button class="nav-tab active" onclick="switchPage('db', this)">BAZA DE DATE</button>
+  <button class="nav-tab" onclick="switchPage('cronologie', this)">CRONOLOGIE</button>
+  <button class="nav-tab" onclick="switchPage('harta', this)">HARTA OPERAȚIUNILOR</button>
+  <button class="nav-tab" onclick="switchPage('foto', this)">ARHIVĂ FOTOGRAFICĂ</button>
 </nav>
 
+<!-- PAGE: BAZA DE DATE -->
+<div id="page-db" class="page active">
 <div class="main-container">
-  <!-- LEFT: Generals list -->
   <aside class="generals-panel">
     <div class="panel-header">
       <h2>Dosare Personale</h2>
@@ -808,12 +1142,8 @@
     <div class="search-box">
       <input type="text" class="search-input" placeholder="> CAUTĂ DUPĂ NUME" oninput="filterGenerals(this.value)">
     </div>
-    <div id="generals-list">
-      <!-- Generated by JS -->
-    </div>
+    <div id="generals-list"></div>
   </aside>
-
-  <!-- RIGHT: Detail panel -->
   <main class="detail-panel" id="detail-panel">
     <div class="detail-placeholder" id="placeholder">
       <div class="placeholder-icon">⊙</div>
@@ -822,6 +1152,104 @@
     </div>
     <div id="detail-view" class="detail-view"></div>
   </main>
+</div>
+</div>
+
+<!-- PAGE: CRONOLOGIE -->
+<div id="page-cronologie" class="page">
+  <div class="page-content">
+    <div class="page-title">// Arhivă Națională Militară</div>
+    <div class="page-heading">CRONOLOGIE — 1940–1965</div>
+    <div class="big-timeline" id="big-timeline"></div>
+  </div>
+</div>
+
+<!-- PAGE: HARTA -->
+<div id="page-harta" class="page map-page">
+  <div class="map-layout">
+    <div class="map-sidebar">
+      <h3>Locații Cheie</h3>
+      <div id="map-locations-list"></div>
+    </div>
+    <div class="map-area">
+      <svg id="map-svg" viewBox="0 0 900 600" xmlns="http://www.w3.org/2000/svg" style="width:100%;height:100%;max-height:calc(100vh - 200px)">
+        <!-- Background -->
+        <rect width="900" height="600" fill="#0d1117"/>
+        <!-- Grid lines -->
+        <g stroke="#1a2030" stroke-width="0.5">
+          <line x1="0" y1="100" x2="900" y2="100"/>
+          <line x1="0" y1="200" x2="900" y2="200"/>
+          <line x1="0" y1="300" x2="900" y2="300"/>
+          <line x1="0" y1="400" x2="900" y2="400"/>
+          <line x1="0" y1="500" x2="900" y2="500"/>
+          <line x1="150" y1="0" x2="150" y2="600"/>
+          <line x1="300" y1="0" x2="300" y2="600"/>
+          <line x1="450" y1="0" x2="450" y2="600"/>
+          <line x1="600" y1="0" x2="600" y2="600"/>
+          <line x1="750" y1="0" x2="750" y2="600"/>
+        </g>
+        <!-- Romania outline (simplified) -->
+        <path d="M320 240 L340 220 L370 215 L400 220 L430 210 L460 215 L480 230 L490 250 L480 270 L470 290 L450 310 L430 330 L410 340 L390 345 L370 340 L350 330 L335 315 L320 300 L310 280 L312 260 Z"
+          fill="rgba(200,168,75,0.08)" stroke="#c8a84b" stroke-width="1.5" opacity="0.7"/>
+        <text x="400" y="275" text-anchor="middle" font-family="Oswald,sans-serif" font-size="14" fill="#c8a84b" opacity="0.5" letter-spacing="2">ROMÂNIA</text>
+
+        <!-- USSR outline (simplified) -->
+        <path d="M490 80 L600 70 L750 90 L820 130 L800 200 L760 250 L720 280 L680 260 L640 240 L600 230 L560 240 L520 230 L490 210 L480 180 L490 150 Z"
+          fill="rgba(139,26,26,0.08)" stroke="#8b1a1a" stroke-width="1" opacity="0.6"/>
+        <text x="650" y="175" text-anchor="middle" font-family="Oswald,sans-serif" font-size="13" fill="#cc2222" opacity="0.4" letter-spacing="2">U.R.S.S.</text>
+
+        <!-- Germany/West -->
+        <path d="M100 150 L200 140 L250 160 L260 200 L240 240 L210 260 L170 250 L130 230 L100 200 Z"
+          fill="rgba(60,60,80,0.15)" stroke="#444" stroke-width="1" opacity="0.5"/>
+        <text x="180" y="200" text-anchor="middle" font-family="Oswald,sans-serif" font-size="11" fill="#888" opacity="0.5" letter-spacing="1">GERMANIA</text>
+
+        <!-- Hungary -->
+        <path d="M270 240 L310 235 L320 240 L312 260 L310 280 L290 285 L265 275 L255 260 L260 245 Z"
+          fill="rgba(60,80,60,0.1)" stroke="#555" stroke-width="1" opacity="0.5"/>
+
+        <!-- Battle markers - rendered dynamically via JS -->
+        <g id="map-markers"></g>
+
+        <!-- Front line -->
+        <path d="M490 210 L520 230 L560 240 L600 230 L640 240" fill="none" stroke="#cc2222" stroke-width="1.5" stroke-dasharray="6,4" opacity="0.4"/>
+        <text x="560" y="220" font-family="Share Tech Mono,monospace" font-size="9" fill="#cc2222" opacity="0.5">FRONTUL DE EST →</text>
+
+        <!-- Compass -->
+        <g transform="translate(840,50)">
+          <circle r="20" fill="none" stroke="#2a2e38" stroke-width="1"/>
+          <text y="-8" text-anchor="middle" font-family="Oswald,sans-serif" font-size="10" fill="#c8a84b">N</text>
+          <line x1="0" y1="-14" x2="0" y2="14" stroke="#c8a84b" stroke-width="0.5" opacity="0.5"/>
+          <line x1="-14" y1="0" x2="14" y2="0" stroke="#c8a84b" stroke-width="0.5" opacity="0.5"/>
+        </g>
+
+        <!-- Legend -->
+        <g transform="translate(20,520)">
+          <rect width="200" height="65" fill="rgba(15,17,20,0.9)" stroke="#2a2e38" stroke-width="1"/>
+          <circle cx="16" cy="16" r="5" fill="#cc2222"/>
+          <text x="28" y="20" font-family="Share Tech Mono,monospace" font-size="10" fill="#ccc3a8">Bătălie / Pierdere majoră</text>
+          <circle cx="16" cy="36" r="5" fill="#c8a84b"/>
+          <text x="28" y="40" font-family="Share Tech Mono,monospace" font-size="10" fill="#ccc3a8">Victorie română</text>
+          <circle cx="16" cy="56" r="5" fill="#2d7a4f"/>
+          <text x="28" y="60" font-family="Share Tech Mono,monospace" font-size="10" fill="#ccc3a8">Locație detenție</text>
+        </g>
+      </svg>
+      <div class="map-info-card" id="map-info-card">
+        <div class="map-info-title" id="mic-title"></div>
+        <div class="map-info-year" id="mic-year"></div>
+        <div class="map-info-text" id="mic-text"></div>
+        <div class="map-info-generals" id="mic-generals"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- PAGE: ARHIVĂ FOTO -->
+<div id="page-foto" class="page">
+  <div class="page-content">
+    <div class="page-title">// Arhivă Fotografică Militară</div>
+    <div class="page-heading">GALERIE — PORTRETE & DOCUMENTE</div>
+    <div class="photo-grid" id="photo-grid"></div>
+  </div>
 </div>
 
 <footer>
@@ -1244,6 +1672,152 @@ function switchTab(btn, tab) {
   btn.classList.add('active');
   btn.closest('.detail-content').querySelectorAll('.tab-pane').forEach(p => p.classList.remove('active'));
   document.getElementById('tab-' + tab).classList.add('active');
+}
+
+// =================== PAGE NAVIGATION ===================
+function switchPage(page, btn) {
+  document.querySelectorAll('.nav-tab').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+  document.getElementById('page-' + page).classList.add('active');
+  if (page === 'cronologie') renderBigTimeline();
+  if (page === 'harta') renderMap();
+  if (page === 'foto') renderPhoto();
+}
+
+// =================== CRONOLOGIE PAGE ===================
+const timelineEvents = [
+  { year: "1941", era: "FRONTUL DE EST — CAMPANIA DIN EST", general: "Gheorghe Avramescu", event: "Armata 4 pe Frontul de Est", desc: "Avramescu preia comanda Armatei 4 Române. Începe una dintre cele mai sângeroase campanii militare din istoria României." },
+  { year: "1942", era: null, general: "Ioan Dumitrache", event: "Cucerirea Nalcikului", desc: "Dumitrache cucerește Nalcikul cu Divizia 2 Munte, capturând 3.000+ prizonieri cu pierderi minime. Primește Crucea de Cavaler a Crucii de Fier." },
+  { year: "1942", era: null, general: "Nicolae Macici", event: "Frontul de la Stalingrad", desc: "Macici comandă trupe române pe frontul crâncen de la Stalingrad. Soldații îl iubesc pentru că refuză să le risipească viețile fără rost." },
+  { year: "1941–1944", era: null, general: "Horia Agarici", event: "As al aviației — Ploiești", desc: "Agarici acumulează victorii aeriene interceptând bombardiere inamice. Apără rafinăriile de la Ploiești în misiuni extrem de periculoase." },
+  { year: "1943–1944", era: null, general: "Leonard Mociulschi", event: "Vânătorii de munte în Caucaz", desc: "Mociulschi conduce unitățile de munte în condiții extreme de iarnă caucaziană, impunându-se prin tactici flexibile și curaj excepțional." },
+  { year: "Aug 1944", era: "ÎNTOARCEREA ARMELOR", general: "Toți generalii", event: "23 August 1944 — România schimbă frontul", desc: "România întoarce armele împotriva Germaniei. Ofițerii care slujiseră cu cinste devin brusc indezirabili pentru noul aliat sovietic." },
+  { year: "Sep–Oct 1944", era: null, general: "Ioan Dumitrache", event: "Masacrul de la Oarba de Mureș", desc: "Dumitrache este obligat de sovietici să trimită 11.000 de soldați la atac frontal suicidar. Apa Mureșului se înroșește. Propunerea sa de flancare fusese respinsă." },
+  { year: "Mar 1945", era: null, general: "Gheorghe Avramescu", event: "Dispariție — arestat de NKVD", desc: "Avramescu este reținut de sovietici și dispare fără urmă. Probabil executat de NKVD. Niciun raport oficial nu va fi eliberat vreodată." },
+  { year: "1945", era: "REPRESIUNEA COMUNISTĂ", general: "Nicolae Macici", event: "Condamnat la moarte de Tribunalul Poporului", desc: "Macici este judecat într-o farsă de proces și condamnat. Pedeapsa îi este comutată în muncă silnică pe viață — pentru a prelungi suferința." },
+  { year: "1946", era: null, general: "Radu Korne", event: "Arest de Securitate", desc: "Korne este reținut în valul represiunilor. Trimis la Aiud, unde va fi supus înfometării sistematice." },
+  { year: "1947", era: null, general: "Ion Tobă Hatmanul", event: "Arest — 11 ani de detenție", desc: "«Hatmanul» este arestat. Va petrece 11 ani în închisorile comuniste, murind cu 6 ani înainte de amnistia din 1964." },
+  { year: "1948", era: null, general: "Henri Cihoski", event: "Reținut de Securitate", desc: "Cihoski este arestat în valul represiunilor postbelice ce vizează sistematic ofițerii cu autoritate morală." },
+  { year: "1949", era: null, general: "Leonard Mociulschi", event: "Moarte în detenție", desc: "Mociulschi moare în închisorile comuniste. Nu va fi niciodată judecat echitabil." },
+  { year: "1949", era: null, general: "Ioan Dumitrache", event: "Arest de Securitate — Jilava & Aiud", desc: "Dumitrache este arestat și trimis la Jilava, apoi Aiud. Va petrece 15 ani în detenție — omul care salvase mii de vieți la Nalcik, pedepsit pentru că salvase prea puțini la Oarba de Mureș." },
+  { year: "1950", era: null, general: "Nicolae Macici", event: "Moarte prin inaniție — Aiud", desc: "Macici moare la 64 de ani, ajuns la 40 de kilograme. Trupul îi este aruncat în Râpa Robilor — groapa comună a eroilor României." },
+  { year: "1952", era: null, general: "Radu Korne", event: "Decedat în detenție", desc: "Korne moare la 65 de ani în închisoarea Aiud. Familia sa suferise deja ani de excludere socială." },
+  { year: "1958", era: null, general: "Ion Tobă Hatmanul", event: "Decedat — cu 6 ani înainte de amnistie", desc: "«Hatmanul» moare la 68 de ani, cu puțin înainte ca regimul să anunțe amnistia din 1964. Nu a apucat libertatea." },
+  { year: "1962", era: null, general: "Henri Cihoski", event: "Deces la 71 de ani", desc: "Cihoski moare după ani de detenție și marginalizare. Reabilitat postum după 1989." },
+  { year: "1964", era: "AMNISTIA GENERALĂ", general: "Ioan Dumitrache", event: "Eliberat după 15 ani", desc: "Dumitrache este eliberat în amnistia din 1964, bătrân și bolnav. Va trăi până în 1977, purtând povara celor 11.000 de soldați de la Oarba de Mureș." },
+  { year: "1989+", era: "REABILITARE", general: "Toți generalii", event: "Reabilitare postumă", desc: "După căderea comunismului, ofițerii persecutați sunt reabilitați juridic. Memoria lor este recuperată parțial de istoria română." },
+];
+
+function renderBigTimeline() {
+  const container = document.getElementById('big-timeline');
+  if (container.dataset.rendered) return;
+  container.dataset.rendered = '1';
+  let html = '';
+  let lastEra = null;
+  timelineEvents.forEach(ev => {
+    if (ev.era && ev.era !== lastEra) {
+      html += `<div class="timeline-era">${ev.era}</div>`;
+      lastEra = ev.era;
+    }
+    html += `
+      <div class="big-timeline-item">
+        <div class="big-timeline-year">${ev.year}</div>
+        <div class="big-timeline-general">${ev.general}</div>
+        <div class="big-timeline-event">${ev.event}</div>
+        <div class="big-timeline-desc">${ev.desc}</div>
+      </div>`;
+  });
+  container.innerHTML = html;
+}
+
+// =================== HARTA PAGE ===================
+const mapLocations = [
+  { id: 'nalcik', name: 'Nalcik', sub: 'Caucaz, 1942', x: 680, y: 200, color: 'dot-gold', year: '1942', text: 'Generalul Ioan Dumitrache cucerește Nalcikul cu Divizia 2 Munte, capturând peste 3.000 de prizonieri sovietici cu pierderi minime. Una dintre cele mai strălucite victorii tactice românești ale războiului.', generals: ['Ioan Dumitrache'] },
+  { id: 'odessa', name: 'Odessa', sub: 'Ucraina, 1941', x: 530, y: 265, color: 'dot-red', year: '1941', text: 'Bătălia de la Odessa — una dintre cele mai grele încercări ale Armatei Române. Macici comandă trupe în asediul îndelungat al portului de la Marea Neagră.', generals: ['Nicolae Macici'] },
+  { id: 'oarba', name: 'Oarba de Mureș', sub: 'România, 1944', x: 370, y: 270, color: 'dot-red', year: 'Sep–Oct 1944', text: 'Carnagiul de la Oarba de Mureș: ~11.000 soldați români sacrificați prin ordin sovietic pentru cucerirea unui singur deal. Dumitrache propusese o manevră de flancare, respinsă de Malinovski.', generals: ['Ioan Dumitrache'] },
+  { id: 'ploiesti', name: 'Ploiești', sub: 'România, 1943–44', x: 400, y: 295, color: 'dot-gold', year: '1943–1944', text: 'Apărarea rafinăriilor de la Ploiești — misiuni de intercepție împotriva bombardierelor americane B-24. Horia Agarici este unul dintre piloții care apără cerul românesc în misiuni extrem de periculoase.', generals: ['Horia Agarici'] },
+  { id: 'aiud', name: 'Aiud', sub: 'România — Închisoare', x: 360, y: 258, color: 'dot-green', year: '1945–1964', text: 'Penitenciarul Aiud — destinația finală a prea multor eroi ai României. Macici, Korne și alți ofițeri au murit aici prin înfometare sistematică. Râpa Robilor — groapa comună fără cruci.', generals: ['Nicolae Macici', 'Radu Korne', 'Ioan Dumitrache'] },
+  { id: 'stalingrad', name: 'Stalingrad', sub: 'Rusia, 1942–43', x: 720, y: 170, color: 'dot-red', year: '1942–1943', text: 'Frontul de la Stalingrad — una dintre cele mai mari catastrofe militare ale celui de-al Doilea Război Mondial. Trupe române participă la luptele de pe Don, suferind pierderi enorme.', generals: ['Nicolae Macici', 'Leonard Mociulschi'] },
+  { id: 'jilava', name: 'Jilava', sub: 'București — Închisoare', x: 415, y: 300, color: 'dot-green', year: '1949–1964', text: 'Închisoarea Jilava — prima stație a anchetelor brutale ale Securității pentru ofițerii arestați. Dumitrache a trecut pe aici înainte de a fi transferat la Aiud.', generals: ['Ioan Dumitrache'] },
+];
+
+function renderMap() {
+  if (document.getElementById('map-locations-list').dataset.rendered) return;
+  document.getElementById('map-locations-list').dataset.rendered = '1';
+
+  const list = document.getElementById('map-locations-list');
+  const markers = document.getElementById('map-markers');
+
+  mapLocations.forEach(loc => {
+    // Sidebar button
+    const btn = document.createElement('button');
+    btn.className = 'map-location-btn';
+    btn.dataset.id = loc.id;
+    btn.innerHTML = `<span class="loc-name">${loc.name}</span><span class="loc-sub">${loc.sub}</span><span class="loc-dot ${loc.color}"></span>`;
+    btn.onclick = () => showMapInfo(loc);
+    list.appendChild(btn);
+
+    // SVG marker
+    const dotColor = loc.color === 'dot-red' ? '#cc2222' : loc.color === 'dot-gold' ? '#c8a84b' : '#2d7a4f';
+    const g = document.createElementNS('http://www.w3.org/2000/svg', 'g');
+    g.setAttribute('style', 'cursor:pointer');
+    g.onclick = () => showMapInfo(loc);
+    g.innerHTML = `
+      <circle cx="${loc.x}" cy="${loc.y}" r="10" fill="${dotColor}" opacity="0.2"/>
+      <circle cx="${loc.x}" cy="${loc.y}" r="5" fill="${dotColor}" opacity="0.9"/>
+      <circle cx="${loc.x}" cy="${loc.y}" r="5" fill="none" stroke="${dotColor}" stroke-width="1" opacity="0.5">
+        <animate attributeName="r" values="5;14;5" dur="2.5s" repeatCount="indefinite"/>
+        <animate attributeName="opacity" values="0.5;0;0.5" dur="2.5s" repeatCount="indefinite"/>
+      </circle>
+      <text x="${loc.x + 8}" y="${loc.y - 8}" font-family="Oswald,sans-serif" font-size="10" fill="${dotColor}" opacity="0.9">${loc.name}</text>
+    `;
+    markers.appendChild(g);
+  });
+}
+
+function showMapInfo(loc) {
+  document.querySelectorAll('.map-location-btn').forEach(b => b.classList.toggle('active', b.dataset.id === loc.id));
+  const card = document.getElementById('map-info-card');
+  document.getElementById('mic-title').textContent = loc.name;
+  document.getElementById('mic-year').textContent = loc.year;
+  document.getElementById('mic-text').textContent = loc.text;
+  document.getElementById('mic-generals').innerHTML = 'Generali implicați: ' + loc.generals.map(g => `<span>${g}</span>`).join('');
+  card.classList.add('visible');
+}
+
+// =================== FOTO PAGE ===================
+const photoData = [
+  { initials: 'NM', name: 'Nicolae Macici', rank: 'General de Corp de Armată', years: '1886–1950', caption: 'Portret oficial, cca. 1940. Comandant al Armatei 1 Române. Decedat prin inaniție la Aiud, 1950.' },
+  { initials: 'LM', name: 'Leonard Mociulschi', rank: 'General de Divizie', years: '1887–1949', caption: 'Fotografie de campanie, Frontul de Est, 1942. Comandant al vânătorilor de munte în Caucaz.' },
+  { initials: 'ID', name: 'Ioan Dumitrache', rank: 'General de Divizie', years: '1893–1977', caption: 'Portret în uniformă de paradă, decorat cu Crucea de Cavaler. Supranumit «Tigrul din Caucaz».' },
+  { initials: 'GA', name: 'Gheorghe Avramescu', rank: 'General de Corp de Armată', years: '1884–1945', caption: 'Ultima fotografie cunoscută, 1944. Dispărut în sistemul sovietic în martie 1945.' },
+  { initials: 'HA', name: 'Horia Agarici', rank: 'Comandor Aviație', years: '1903–1973', caption: 'Lângă aeronava de vânătoare, aerodromul Pipera, 1943. As al aviației române cu victorii multiple confirmate.' },
+  { initials: 'RK', name: 'Radu Korne', rank: 'General de Brigadă', years: '1887–1952', caption: 'Portret de comandant, cca. 1941. Specialist în cavalerie și operațiuni rapide de flancare.' },
+  { initials: 'IT', name: 'Ion Tobă Hatmanul', rank: 'General de Brigadă', years: '1890–1958', caption: 'Fotografie de grup cu ofițerii diviziei, Moldova, 1917. Poreclit «Hatmanul» de soldații care îl iubeau.' },
+  { initials: 'HC', name: 'Henri Cihoski', rank: 'General de Brigadă', years: '1891–1962', caption: 'Portret oficial în uniformă de gală, Galați, cca. 1939. Comandant de artilerie cu experiență în ambele războaie mondiale.' },
+];
+
+function renderPhoto() {
+  const grid = document.getElementById('photo-grid');
+  if (grid.dataset.rendered) return;
+  grid.dataset.rendered = '1';
+  const colors = ['#1a2a3a','#2a1a1a','#1a2a1a','#2a2a1a','#1a1a2a'];
+  photoData.forEach((p, i) => {
+    const bg = colors[i % colors.length];
+    grid.innerHTML += `
+      <div class="photo-card">
+        <div class="photo-placeholder" style="background:${bg}">
+          <div class="photo-initials-big">${p.initials}</div>
+          <div class="photo-year-badge">${p.years}</div>
+        </div>
+        <div class="photo-card-info">
+          <div class="photo-card-name">${p.name}</div>
+          <div class="photo-card-rank">${p.rank}</div>
+          <div class="photo-caption">${p.caption}</div>
+        </div>
+      </div>`;
+  });
 }
 
 // Clock
